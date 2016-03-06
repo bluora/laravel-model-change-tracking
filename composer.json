@@ -1,0 +1,26 @@
+{
+    "name": "bluora/model-change-tracking",
+    "description": "Provides support for tracking current user against model changes for the Eloquent ORM",
+    "keywords": ["laravel","illuminate","eloquent"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rocco Howard",
+            "email": "rocco@bluora.com.au"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.*",
+        "illuminate/database": "4.*|5.*",
+        "symfony/process": "~2.3",
+        "codeclimate/php-test-reporter": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "ModelChangeTracking\\": "src/ModelChangeTracking/"
+        }
+    }
+}
