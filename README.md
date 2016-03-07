@@ -6,7 +6,7 @@ Adds events to set a column to the current user for when a model is created, upd
 
 Require this package in your `composer.json` file:
 
-`"bluora/model-change-tracking": "dev-master"`
+`"bluora/laravel-model-change-tracking": "dev-master"`
 
 Then run `composer update` to download the package to your vendor directory.
 

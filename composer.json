@@ -1,5 +1,5 @@
 {
-    "name": "bluora/model-change-tracking",
+    "name": "bluora/laravel-model-change-tracking",
     "description": "Provides support for tracking current user against model changes for the Eloquent ORM",
     "keywords": ["laravel","illuminate","eloquent"],
     "license": "MIT",
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "ModelChangeTracking\\": "src/ModelChangeTracking/"
+            "ModelChangeTracking\\": "src/"
         }
     }
 }
