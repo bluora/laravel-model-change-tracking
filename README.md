@@ -1,6 +1,10 @@
-# Laravel Eloquent Model - user change tracking
+# User change tracking in Laravel model
 
+## Change by User Trait
 Adds events to set a column to the current user for when a model is created, updated or deleted.
+
+## Column Changes Trait
+Adds a `saving` event to the model to track changes to all columns
 
 ## Installation
 
