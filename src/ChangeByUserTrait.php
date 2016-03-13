@@ -1,11 +1,11 @@
 <?php
+
 namespace ModelChangeTracking;
 
 use Auth;
 
-trait ChangeByUserTrait 
+trait ChangeByUserTrait
 {
-
     public function getCreatedByColumn()
     {
         return 'created_by';
@@ -22,7 +22,7 @@ trait ChangeByUserTrait
     }
 
     /**
-     * Boot the events that apply which user is making the last event change
+     * Boot the events that apply which user is making the last event change.
      *
      * @return void
      */
@@ -35,6 +35,7 @@ trait ChangeByUserTrait
             if (Auth::check() && $model->getUpdatedByColumn()) {
                 $model->{$model->getUpdatedByColumn()} = Auth::user()->id;
             }
+
             return true;
         });
 
@@ -42,6 +43,7 @@ trait ChangeByUserTrait
             if (Auth::check() && $model->getUpdatedByColumn()) {
                 $model->{$model->getUpdatedByColumn()} = Auth::user()->id;
             }
+
             return true;
         });
 
@@ -49,6 +51,7 @@ trait ChangeByUserTrait
             if (Auth::check() && $model->getDeletedByColumn()) {
                 $model->{$model->getDeletedByColumn()} = Auth::user()->id;
             }
+
             return true;
         });
     }

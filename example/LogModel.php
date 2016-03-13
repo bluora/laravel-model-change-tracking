@@ -21,11 +21,11 @@ class LogModel extends Model
      * @var array
      */
     protected $casts = [
-        'model' => 'string',
-        'model_id' => 'integer',
+        'model'       => 'string',
+        'model_id'    => 'integer',
         'column_name' => 'string',
-        'old_value' => 'string',
-        'new_value' => 'string'
+        'old_value'   => 'string',
+        'new_value'   => 'string',
     ];
 
     /**
@@ -39,7 +39,7 @@ class LogModel extends Model
         'column_name',
         'old_value',
         'new_value',
-        'log_by'
+        'log_by',
     ];
 
     /**
@@ -50,7 +50,7 @@ class LogModel extends Model
     protected $hidden = [];
 
     /**
-     * Get the user who created log
+     * Get the user who created log.
      */
     public function logBy()
     {
