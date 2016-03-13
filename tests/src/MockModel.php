@@ -6,13 +6,13 @@ class MockModel extends Illuminate\Database\Eloquent\Model
 
     protected $json_columns;
 
-    public function __construct(array $attributes = array())
+    public function __construct(array $attributes = [])
     {
         static::$booted[get_class($this)] = true;
         parent::__construct($attributes);
     }
 
-    public function setCustomSetAttribute( $value )
+    public function setCustomSetAttribute($value)
     {
         $this->setJsonAttribute($this->jsonAttributes['custom_set'], 'custom_set', "custom {$value}");
     }
