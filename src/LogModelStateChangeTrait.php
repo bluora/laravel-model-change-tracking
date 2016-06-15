@@ -6,7 +6,6 @@ use Auth;
 
 trait LogModelStateChangeTrait
 {
-
     /**
      * Boot the events that apply which user is making the last event change.
      *

@@ -23,7 +23,7 @@ class LogModelStateChange extends Model
     protected $casts = [
         'model'       => 'string',
         'model_id'    => 'integer',
-        'state'       => 'string'
+        'state'       => 'string',
     ];
 
     /**
