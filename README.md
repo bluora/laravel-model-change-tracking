@@ -1,10 +1,14 @@
-# User change tracking in Laravel model
+# Change tracking in Laravel model
+
+## State Change
+Track state changes on your model and by which user for the following states - `created`, `updated`, `deleted`, and `restored`.
+
+## Column Change Trait
+Adds a `saving` event to the model to track changes to all column values.
 
 ## Change by User Trait
-Adds events to set a column to the current user for when a model is created, updated or deleted.
+Adds events to set a column to the current user for when a model is `created`, `updated`, or `deleted`.
 
-## Column Changes Trait
-Adds a `saving` event to the model to track changes to all columns
 
 ## Installation
 
