@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateLogModelTable extends Migration
+class CreateLogModelChangeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,11 @@ class CreateLogModelTable extends Migration
      */
     public function up()
     {
-        Schema::create('log_model', function ($table) {
+        Schema::create('log_model_state', function ($table) {
             $table->bigIncrements('id');
             $table->string('model');
             $table->integer('model_id');
-            $table->text('old_value');
-            $table->text('new_value');
+            $table->text('state');
             $table->timestamp('log_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->integer('log_by');
             $table->string('ip_address', 45)->nullable();
@@ -32,9 +31,9 @@ class CreateLogModelTable extends Migration
      */
     public function down()
     {
-        Schema::table('log_model', function (Blueprint $table) {
-            $table->dropForeign('log_model_log_by_foreign');
+        Schema::table('log_model_state', function (Blueprint $table) {
+            $table->dropForeign('log_model_state_log_by_foreign');
         });
-        Schema::drop('log_model');
+        Schema::drop('log_model_state');
     }
 }

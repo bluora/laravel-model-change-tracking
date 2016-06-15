@@ -5,27 +5,8 @@ namespace ModelChangeTracking;
 use Auth;
 use Diff\Differ\MapDiffer;
 
-trait LogChangesTrait
+trait LogModelChangeTrait
 {
-    /**
-     * Get the namespaced class path to the model.
-     *
-     * @return string
-     */
-    public function getModelsPath()
-    {
-        return 'App\\Models\\';
-    }
-
-    /**
-     * Get the namespaced class reference to the logging model.
-     *
-     * @return string
-     */
-    public function getLoggingModel()
-    {
-        return 'App\\Models\\LogModel';
-    }
 
     /**
      * Boot the log changes trait for a model.
@@ -41,9 +22,9 @@ trait LogChangesTrait
                     && (empty($casts[$column_name]) || $casts[$column_name] != 'json')) {
                     $old_value = $model->getOriginal($column_name);
                     $log_change = [];
-                    static::logChangesCalculateDiff($column_name, $log_change, $old_value, $value);
+                    static::getModelChangeDiff($column_name, $log_change, $old_value, $value);
                     foreach ($log_change as $change) {
-                        self::logChangesAdd($model, $change['column_name'], $change['old_value'], $change['new_value']);
+                        self::addModelChange($model, $change['column_name'], $change['old_value'], $change['new_value']);
                     }
                 }
             }
@@ -60,7 +41,7 @@ trait LogChangesTrait
      *
      * @return void
      */
-    private static function logChangesCalculateDiff($column_name, &$log_change, $old_value, $new_value)
+    private static function getModelChangeDiff($column_name, &$log_change, $old_value, $new_value)
     {
         if (is_array($old_value) && is_array($new_value)) {
             $difference = (new MapDiffer())->doDiff($old_value, $new_value);
@@ -73,7 +54,7 @@ trait LogChangesTrait
                     $value['newvalue'] = '';
                 }
                 if (is_array($value['oldvalue']) && is_array($value['newvalue'])) {
-                    static::logChangesCalculateDiff($column_name.'.'.$key, $log_change, $value['oldvalue'], $value['newvalue']);
+                    static::getModelChangeDiff($column_name.'.'.$key, $log_change, $value['oldvalue'], $value['newvalue']);
                 } else {
                     $log_change[] = [
                         'column_name' => $column_name.'.'.$key,
@@ -101,10 +82,10 @@ trait LogChangesTrait
      *
      * @return void
      */
-    private static function logChangesAdd($model, $column_name, $old_value, $new_value)
+    private static function addModelChange($model, $column_name, $old_value, $new_value)
     {
-        $log_model_name = $model->getLoggingModel();
-        $models_path = $model->getModelsPath();
+        $models_path = Config::get('model_change_tracking.ModelsPath');
+        $log_model_name = Config::get('model_change_tracking.LogModelChange');
 
         $log = new $log_model_name();
         $log->model = str_replace($models_path, '', static::class);

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LogModel extends Model
+class LogModelChange extends Model
 {
     public $timestamps = false;
 
@@ -13,7 +13,7 @@ class LogModel extends Model
      *
      * @var string
      */
-    protected $table = 'log_model';
+    protected $table = 'log_model_change';
 
     /**v
      * The attributes that require casting
