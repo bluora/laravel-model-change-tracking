@@ -7,7 +7,6 @@ use Diff\Differ\MapDiffer;
 
 trait LogModelChangeTrait
 {
-
     /**
      * Boot the log changes trait for a model.
      *
