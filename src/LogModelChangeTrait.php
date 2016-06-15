@@ -1,6 +1,6 @@
 <?php
 
-namespace ModelChangeTracking;
+namespace Bluora\ModelChangeTracking;
 
 use Auth;
 use Diff\Differ\MapDiffer;
