@@ -1,6 +1,6 @@
 <?php
 
-namespace Bluora\ModelChangeTracking;
+namespace Bluora\LaravelModelChangeTracking;
 
 use Auth;
 

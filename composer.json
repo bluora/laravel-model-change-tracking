@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Bluora\\ModelChangeTracking\\": "src/"
+            "Bluora\\LaravelModelChangeTracking\\": "src/"
         }
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Bluora\ModelChangeTracking;
+namespace Bluora\LaravelModelChangeTracking;
 
 use Auth;
 
-trait LogModelStateChangeTrait
+trait LogStateChangeTrait
 {
     /**
      * Boot the events that apply which user is making the last event change.

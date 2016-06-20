@@ -1,11 +1,11 @@
 <?php
 
-namespace Bluora\ModelChangeTracking;
+namespace Bluora\LaravelModelChangeTracking;
 
 use Auth;
 use Diff\Differ\MapDiffer;
 
-trait LogModelChangeTrait
+trait LogChangeTrait
 {
     /**
      * Boot the log changes trait for a model.
