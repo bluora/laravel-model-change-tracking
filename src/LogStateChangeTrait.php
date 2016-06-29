@@ -3,6 +3,7 @@
 namespace Bluora\LaravelModelChangeTracking;
 
 use Auth;
+use Config;
 
 trait LogStateChangeTrait
 {

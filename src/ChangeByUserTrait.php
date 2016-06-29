@@ -16,6 +16,11 @@ trait ChangeByUserTrait
         return 'updated_by';
     }
 
+    public function getArchivedByColumn()
+    {
+        return 'archived_by';
+    }
+
     public function getDeletedByColumn()
     {
         return 'deleted_by';

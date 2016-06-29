@@ -20,7 +20,7 @@ class CreateLogModelChangeTable extends Migration
             $table->text('old_value');
             $table->text('new_value');
             $table->timestamp('log_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->integer('log_by');
+            $table->integer('log_by')->nullable();;
             $table->string('ip_address', 45)->nullable();
             $table->foreign('log_by')->references('id')->on('user');
         });
