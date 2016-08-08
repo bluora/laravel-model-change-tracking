@@ -37,7 +37,9 @@ trait LogChangeTrait
             // Trim all values
             if (!static::$disable_trim_values) {
                 foreach ($model->getDirty() as $column_name => $value) {
-                    $model->$column_name = trim($value);
+                    if (!is_null($value)) {
+                        $model->$column_name = trim($value);
+                    }
                 }
             }
         });
@@ -185,7 +187,7 @@ trait LogChangeTrait
         $related_model_class = get_class($related_model);
 
         // Old items before we make change
-        $old_data = $related_model_class::whereHas($this->getTable(), function($sub_query) use ($model_qualified_id_column, $model_id) {
+        $old_data = $related_model_class::whereHas(camel_case($this->getTable()), function($sub_query) use ($model_qualified_id_column, $model_id) {
             $sub_query->where($model_qualified_id_column, $model_id);
         })->get();
 
@@ -193,7 +195,7 @@ trait LogChangeTrait
         $relation->sync($new_value);
 
         // New items after we made the change
-        $new_data = $related_model_class::whereHas($this->getTable(), function($sub_query) use ($model_qualified_id_column, $model_id) {
+        $new_data = $related_model_class::whereHas(camel_case($this->getTable()), function($sub_query) use ($model_qualified_id_column, $model_id) {
             $sub_query->where($model_qualified_id_column, $model_id);
         })->get();
 
