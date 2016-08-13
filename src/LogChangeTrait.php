@@ -17,6 +17,13 @@ trait LogChangeTrait
     protected static $disable_trim_values = false;
 
     /**
+     * No logging of the standard date columns.
+     *
+     * @param array
+     */
+    protected static $do_not_log_fields = ['created_at', 'updated_at', 'archived_at', 'deleted_at'];
+
+    /**
      * Boot the log changes trait for a model.
      *
      * @return void
@@ -53,6 +60,7 @@ trait LogChangeTrait
 
                 // Ignore columns found in the do_not_log variable, and ignore non-json columns
                 if ((empty($model->do_not_log) || !in_array($column_name, $model->do_not_log))
+                    && !in_array($column_name, static::$do_not_log_fields)
                     && (empty($casts[$column_name]) || $casts[$column_name] != 'json')) {
                     $old_text = $model->getOriginal($column_name);
                     $log_change = [];
@@ -202,8 +210,8 @@ trait LogChangeTrait
         // Filter this
         $old_data_list = $old_data;
         $new_data_list = $new_data;
-        $old_data_id_list = array_unique($old_data_list->lists($related_model_id_column)->all());
-        $new_data_id_list = array_unique($new_data_list->lists($related_model_id_column)->all());
+        $old_data_id_list = array_unique($old_data_list->pluck($related_model_id_column)->all());
+        $new_data_id_list = array_unique($new_data_list->pluck($related_model_id_column)->all());
 
         // Calculate the change
         $add_value = array_diff($new_data_id_list, $old_data_id_list);
