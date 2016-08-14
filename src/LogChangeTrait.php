@@ -8,7 +8,6 @@ use Diff\Differ\MapDiffer;
 
 trait LogChangeTrait
 {
-
     /**
      * Disable trimming of column values.
      *
@@ -70,8 +69,8 @@ trait LogChangeTrait
                             $model->id,
                             $model->getTable(),
                             $change['column_name'],
-                            (string)$change['old_text'],
-                            (string)$change['new_text'],
+                            (string) $change['old_text'],
+                            (string) $change['new_text'],
                             [],
                             []
                         );
@@ -108,16 +107,16 @@ trait LogChangeTrait
                 } else {
                     $log_change[] = [
                         'column_name' => $column_name.'.'.$key,
-                        'old_text'   => $value['oldText'],
-                        'new_text'   => $value['newValue'],
+                        'old_text'    => $value['oldText'],
+                        'new_text'    => $value['newValue'],
                     ];
                 }
             }
         } else {
             $log_change[] = [
                 'column_name' => $column_name,
-                'old_text'   => $old_text,
-                'new_text'   => $new_text,
+                'old_text'    => $old_text,
+                'new_text'    => $new_text,
             ];
         }
     }
@@ -130,8 +129,8 @@ trait LogChangeTrait
      * @param string $column_name
      * @param string $old_text
      * @param string $new_text
-     * @param array $add_value
-     * @param array $remove_value
+     * @param array  $add_value
+     * @param array  $remove_value
      *
      * @return void
      */
@@ -140,7 +139,7 @@ trait LogChangeTrait
         $table_name,
         $column_name,
         $old_text,
-        $new_text, 
+        $new_text,
         $add_value,
         $remove_value
     ) {
@@ -172,7 +171,8 @@ trait LogChangeTrait
      * Process relationship changes and log.
      *
      * @param string $relation_method_name
-     * @param array $new_value
+     * @param array  $new_value
+     *
      * @return void
      */
     public function processManyToManyChange($relation_method_name, $new_value)
@@ -182,7 +182,7 @@ trait LogChangeTrait
         $relation = $this->$relation_method_name();
 
         // This model
-        $model_id =  $this->id;
+        $model_id = $this->id;
         $model_key_name = $relation->getForeignKey();
         $model_id_column = $this->getKeyName();
         $model_qualified_id_column = $this->getQualifiedKeyName();
@@ -195,7 +195,7 @@ trait LogChangeTrait
         $related_model_class = get_class($related_model);
 
         // Old items before we make change
-        $old_data = $related_model_class::whereHas(camel_case($this->getTable()), function($sub_query) use ($model_qualified_id_column, $model_id) {
+        $old_data = $related_model_class::whereHas(camel_case($this->getTable()), function ($sub_query) use ($model_qualified_id_column, $model_id) {
             $sub_query->where($model_qualified_id_column, $model_id);
         })->get();
 
@@ -203,7 +203,7 @@ trait LogChangeTrait
         $relation->sync($new_value);
 
         // New items after we made the change
-        $new_data = $related_model_class::whereHas(camel_case($this->getTable()), function($sub_query) use ($model_qualified_id_column, $model_id) {
+        $new_data = $related_model_class::whereHas(camel_case($this->getTable()), function ($sub_query) use ($model_qualified_id_column, $model_id) {
             $sub_query->where($model_qualified_id_column, $model_id);
         })->get();
 
