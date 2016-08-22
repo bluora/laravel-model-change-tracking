@@ -23,6 +23,32 @@ trait LogChangeTrait
     protected static $do_not_log_fields = ['created_at', 'updated_at', 'archived_at', 'deleted_at'];
 
     /**
+     * Run a dirty check before returning what is dirty.
+     *
+     * @return array
+     */
+    public function preDirtyCheck()
+    {
+        // Ensure empty string values for dates are converted to null
+        $casts = $this->getDates();
+        foreach ($this->getDirty() as $column_name => $value) {
+            if (in_array($column_name, $casts) && $value === '') {
+                $this->$column_name = null;
+            }
+        }
+
+        // Trim all values
+        if (!static::$disable_trim_values) {
+            foreach ($this->getDirty() as $column_name => $value) {
+                if (!is_null($value)) {
+                    $this->$column_name = trim($value);
+                }
+            }
+        }
+        return $this->getDirty();
+    }
+
+    /**
      * Boot the log changes trait for a model.
      *
      * @return void
@@ -31,23 +57,7 @@ trait LogChangeTrait
     {
         // Saving model event
         static::saving(function ($model) {
-
-            // Ensure empty string values for dates are converted to null
-            $casts = $model->getDates();
-            foreach ($model->getDirty() as $column_name => $value) {
-                if (in_array($column_name, $casts) && $value === '') {
-                    $model->$column_name = null;
-                }
-            }
-
-            // Trim all values
-            if (!static::$disable_trim_values) {
-                foreach ($model->getDirty() as $column_name => $value) {
-                    if (!is_null($value)) {
-                        $model->$column_name = trim($value);
-                    }
-                }
-            }
+            $model->preDirtyCheck();
         });
 
         // Saved model event
