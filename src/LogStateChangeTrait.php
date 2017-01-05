@@ -2,6 +2,7 @@
 
 namespace Bluora\LaravelModelChangeTracking;
 
+use App;
 use Auth;
 use Config;
 
@@ -48,7 +49,8 @@ trait LogStateChangeTrait
         $log->model = str_replace($models_path, '', static::class);
         $log->model_id = $model->id;
         $log->state = $state;
-        if (Auth::check()) {
+        $log->log_by = null;
+        if (!App::runningInConsole() && Auth::check()) {
             $log->log_by = Auth::user()->id;
         }
         $log->ip_address = request()->ip();

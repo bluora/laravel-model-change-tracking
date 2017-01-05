@@ -2,6 +2,7 @@
 
 namespace Bluora\LaravelModelChangeTracking;
 
+use App;
 use Auth;
 
 trait ChangeByUserTrait
@@ -34,10 +35,10 @@ trait ChangeByUserTrait
     public static function bootChangeByUserTrait()
     {
         static::creating(function ($model) {
-            if (Auth::check() && $model->getCreatedByColumn()) {
+            if (!App::runningInConsole() && Auth::check() && $model->getCreatedByColumn()) {
                 $model->{$model->getUpdatedByColumn()} = Auth::user()->id;
             }
-            if (Auth::check() && $model->getUpdatedByColumn()) {
+            if (!App::runningInConsole() && Auth::check() && $model->getUpdatedByColumn()) {
                 $model->{$model->getUpdatedByColumn()} = Auth::user()->id;
             }
 
@@ -45,7 +46,7 @@ trait ChangeByUserTrait
         });
 
         static::updating(function ($model) {
-            if (Auth::check() && $model->getUpdatedByColumn()) {
+            if (!App::runningInConsole() && Auth::check() && $model->getUpdatedByColumn()) {
                 $model->{$model->getUpdatedByColumn()} = Auth::user()->id;
             }
 
@@ -53,7 +54,7 @@ trait ChangeByUserTrait
         });
 
         static::deleting(function ($model) {
-            if (Auth::check() && $model->getDeletedByColumn()) {
+            if (!App::runningInConsole() && Auth::check() && $model->getDeletedByColumn()) {
                 $model->{$model->getDeletedByColumn()} = Auth::user()->id;
             }
 
