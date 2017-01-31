@@ -23,13 +23,17 @@ trait LogStateChangeTrait
             static::addModelStateChange($model, 'updated');
         });
 
-        static::deleted(function ($model) {
-            static::addModelStateChange($model, 'deleted');
-        });
+        if (method_exists(get_class(), 'deleted')) {
+            static::deleted(function ($model) {
+                static::addModelStateChange($model, 'deleted');
+            });
+        }
 
-        static::restored(function ($model) {
-            static::addModelStateChange($model, 'restored');
-        });
+        if (method_exists(get_class(), 'restored')) {
+            static::restored(function ($model) {
+                static::addModelStateChange($model, 'restored');
+            });
+        }
     }
 
     /**
