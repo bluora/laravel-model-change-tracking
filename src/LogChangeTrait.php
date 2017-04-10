@@ -202,13 +202,13 @@ trait LogChangeTrait
 
         // This model
         $model_id = $this->id;
-        $model_key_name = $relation->getForeignKey();
+        $model_key_name = $relation->getQualifiedForeignKeyName();
         $model_id_column = $this->getKeyName();
         $model_qualified_id_column = $this->getQualifiedKeyName();
 
         // The other model
         $related_model = $relation->getRelated();
-        $related_model_key_name = $relation->getOtherKey();
+        $related_model_key_name = $relation->getQualifiedRelatedKeyName();
         $related_model_id_column = $related_model->getKeyName();
         $related_model_qualified_id_column = $related_model->getQualifiedKeyName();
         $related_model_class = get_class($related_model);
@@ -250,7 +250,7 @@ trait LogChangeTrait
         $new_text = $new_data->whereIn($related_model_id_column, $change_values)->implode('log_name', ', ');
 
         // Log against the model
-        $this->addModelChange(
+        self::addModelChange(
             $this->id,
             $relation->getTable(),
             $related_model_key_name,
@@ -262,7 +262,7 @@ trait LogChangeTrait
 
         // Log against each added related model
         foreach ($add_value as $relation_id) {
-            $related_model->addModelChange(
+            self::addModelChange(
                 $relation_id,
                 $relation->getTable(),
                 $model_key_name,
@@ -275,7 +275,7 @@ trait LogChangeTrait
 
         // Log against each removed related model
         foreach ($remove_value as $relation_id) {
-            $related_model->addModelChange(
+            self::addModelChange(
                 $relation_id,
                 $relation->getTable(),
                 $model_key_name,
