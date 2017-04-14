@@ -9,20 +9,27 @@ This package provides a number of traits to track changes made to a model.
 ## State Change
 Track state changes on your model and by which user for the following states - `created`, `updated`, `deleted`, and `restored`.
 
-## Column Change Trait
+## Attribute Change Trait
 Adds a `saving` event to the model to track changes to all attribute values.
 
 ## Change by User Trait
-Adds events to set a attribute to the current user for when a model is `created`, `updated`, or `deleted`.
+Adds events to set a attribute to the current user for when a model is `created`, `updated`, `archived`, or `deleted`.
 
+## Install
 
-## Installation
+Via composer:
 
-Require this package in your `composer.json` file:
+`$ composer require-dev bluora/laravel-model-change-tracking dev-master`
 
-`"bluora/laravel-model-change-tracking": "dev-master"`
+Enable the service provider by editing config/app.php:
 
-Then run `composer update` to download the package to your vendor directory.
+```php
+    'providers' => [
+        ...
+        Bluora\LaravelModelChangeTracking\ServiceProvider::class,
+        ...
+    ];
+```
 
 ## Usage
 
@@ -42,9 +49,11 @@ class User extends Model
     use ChangeByUserTrait;
 }
 ```
-### Turn off attribute
+
+#### Turn off tracking attribute
 
 You can turn off by returning false.
+
 ```php
 public function getCreatedByColumn()
 {
@@ -56,13 +65,18 @@ public function getUpdatedByColumn()
     return false;
 }
 
+public function getArchivedByColumn()
+{
+    return false;
+}
+
 public function getDeletedByColumn()
 {
     return false;
 }
 ```
 
-### Different attribute name
+#### Different attribute name
 
 You can specify the attribute name in the return value.
 
@@ -91,7 +105,6 @@ public function getDeletedByColumn()
 ### Track state changes of models
 
 Tracks model state changes externally in database table.
-
 
 ```php
 
