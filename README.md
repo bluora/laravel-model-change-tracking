@@ -1,13 +1,19 @@
-# Change tracking in Laravel model
+# Change tracking for Laravel Eloquent model's
+
+This package provides a number of traits to track changes made to a model.
+
+[![Latest Stable Version](https://poser.pugx.org/bluora/laravel-model-change-tracking/v/stable.svg)](https://packagist.org/packages/bluora/laravel-model-change-tracking) [![Total Downloads](https://poser.pugx.org/bluora/laravel-model-change-tracking/downloads.svg)](https://packagist.org/packages/bluora/laravel-model-change-tracking) [![Latest Unstable Version](https://poser.pugx.org/bluora/laravel-model-change-tracking/v/unstable.svg)](https://packagist.org/packages/bluora/laravel-model-change-tracking) [![License](https://poser.pugx.org/bluora/laravel-model-change-tracking/license.svg)](https://packagist.org/packages/bluora/laravel-model-change-tracking)
+
+[![Build Status](https://travis-ci.org/bluora/laravel-model-change-tracking.svg?branch=master)](https://travis-ci.org/bluora/laravel-model-change-tracking) [![StyleCI](https://styleci.io/repos/53252133/shield?branch=master)](https://styleci.io/repos/53252133) [![Test Coverage](https://codeclimate.com/github/bluora/laravel-model-change-tracking/badges/coverage.svg)](https://codeclimate.com/github/bluora/laravel-model-change-tracking/coverage) [![Issue Count](https://codeclimate.com/github/bluora/laravel-model-change-tracking/badges/issue_count.svg)](https://codeclimate.com/github/bluora/laravel-model-change-tracking) [![Code Climate](https://codeclimate.com/github/bluora/laravel-model-change-tracking/badges/gpa.svg)](https://codeclimate.com/github/bluora/laravel-model-change-tracking) 
 
 ## State Change
 Track state changes on your model and by which user for the following states - `created`, `updated`, `deleted`, and `restored`.
 
 ## Column Change Trait
-Adds a `saving` event to the model to track changes to all column values.
+Adds a `saving` event to the model to track changes to all attribute values.
 
 ## Change by User Trait
-Adds events to set a column to the current user for when a model is `created`, `updated`, or `deleted`.
+Adds events to set a attribute to the current user for when a model is `created`, `updated`, or `deleted`.
 
 
 ## Installation
@@ -22,7 +28,7 @@ Then run `composer update` to download the package to your vendor directory.
 
 ### User tracking of changes.
 
-Add a `created_by`, `updated_by`, `archived_by`, and `deleted_by` columns to your model's database table.
+Add a `created_by`, `updated_by`, `archived_by`, and `deleted_by` attributes to your model's database table.
 
 ```php
 
@@ -36,7 +42,7 @@ class User extends Model
     use ChangeByUserTrait;
 }
 ```
-### Turn off column
+### Turn off attribute
 
 You can turn off by returning false.
 ```php
@@ -56,9 +62,9 @@ public function getDeletedByColumn()
 }
 ```
 
-### Different column name
+### Different attribute name
 
-You can specify the column name in the return value.
+You can specify the attribute name in the return value.
 
 ```php
 public function getCreatedByColumn()
