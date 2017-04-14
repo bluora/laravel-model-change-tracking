@@ -15,6 +15,12 @@ engines:
         enabled: false
       Controversial/CamelCasePropertyName:
         enabled: false
+      Naming/LongVariable:
+        enabled: false
+      Naming/ShortMethodName:
+        enabled: false
+      CleanCode/StaticAccess:
+        enabled: false
 ratings:
   paths:
   - "**.php"
