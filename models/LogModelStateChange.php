@@ -13,7 +13,7 @@ class LogModelStateChange extends Model
      *
      * @var string
      */
-    protected $table = 'log_model_state';
+    protected $table = 'log_model_state_change';
 
     /**v
      * The attributes that require casting

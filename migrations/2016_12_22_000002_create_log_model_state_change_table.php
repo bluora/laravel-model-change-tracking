@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateLogModelChangeTable extends Migration
+class CreateLogModelStateChangeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,14 @@ class CreateLogModelChangeTable extends Migration
      */
     public function up()
     {
-        Schema::create('log_model_change', function ($table) {
+        Schema::create('log_model_state_change', function ($table) {
+            $table->engine = 'InnoDB';
             $table->bigIncrements('id');
-            $table->string('model');
-            $table->integer('model_id');
-            $table->text('column_name');
-            $table->text('old_value');
-            $table->text('new_value');
+            $table->string('model')->default('');
+            $table->bigInteger('model_id');
+            $table->text('state')->nullable();
             $table->timestamp('log_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->integer('log_by')->nullable();
+            $table->bigInteger('log_by')->unsigned()->nullable();
             $table->string('ip_address', 45)->nullable();
             $table->foreign('log_by')->references('id')->on('user');
         });
@@ -33,9 +32,9 @@ class CreateLogModelChangeTable extends Migration
      */
     public function down()
     {
-        Schema::table('log_model_change', function (Blueprint $table) {
-            $table->dropForeign('log_model_change_log_by_foreign');
+        Schema::table('log_model_state', function (Blueprint $table) {
+            $table->dropForeign('log_model_state_log_by_foreign');
         });
-        Schema::drop('log_model_change');
+        Schema::drop('log_model_state');
     }
 }
