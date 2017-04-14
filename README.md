@@ -20,13 +20,16 @@ Then run `composer update` to download the package to your vendor directory.
 
 ## Usage
 
-### Basic
+### User tracking of changes.
 
-Add a `created_by`, `updated_by` and `deleted_by` columns to your model's database table.
-
+Add a `created_by`, `updated_by`, `archived_by`, and `deleted_by` columns to your model's database table.
 
 ```php
-use ModelChangeTracking\ChangeByUserTrait;
+
+namespace App\Models;
+
+use Bluora\LaravelModelChangeTracking\ChangeByUserTrait;
+use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
@@ -68,9 +71,54 @@ public function getUpdatedByColumn()
     return 'updated_by';
 }
 
+public function getArchivedByColumn()
+{
+    return 'updated_by';
+}
+
 public function getDeletedByColumn()
 {
     return 'deleted_by';
 }
 ```
 
+### Track state changes of models
+
+Tracks model state changes externally in database table.
+
+
+```php
+
+namespace App\Models;
+
+use Bluora\LaravelModelChangeTracking\LogStateChangeTrait;
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    use LogStateChangeTrait;
+}
+```
+
+### Log each attribute value change
+
+Tracks attribute value changes.
+
+
+```php
+
+namespace App\Models;
+
+use Bluora\LaravelModelChangeTracking\LogChangeTrait;
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    use LogChangeTrait;
+
+    protected $do_not_log = [
+        'password',
+        'remember_token',
+    ];
+}
+```
