@@ -2,7 +2,7 @@
 
 class MockModel extends Illuminate\Database\Eloquent\Model
 {
-    use \ModelChangeTracking\ChangeByUserTrait;
+    use \Bluora\LaravelModelChangeTracking\ChangeByUserTrait;
 
     protected $json_columns;
 
