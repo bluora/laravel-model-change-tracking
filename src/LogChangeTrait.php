@@ -45,6 +45,7 @@ trait LogChangeTrait
                 }
             }
         }
+
         return $this->getDirty();
     }
 
@@ -264,7 +265,6 @@ trait LogChangeTrait
                     $log_change = [];
                     static::getModelChangeDiff($column_name, $log_change, $old_text, $value);
                     foreach ($log_change as $change) {
-
                         if (is_array($change['old_text'])) {
                             $change['old_text'] = json_encode($change['old_text']);
                         }

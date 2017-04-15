@@ -23,8 +23,8 @@ class ServiceProvider extends BaseServiceProvider
         // Publish the default config and models.
         $this->publishes([
             __DIR__.'/../config/model_change_tracking.php' => base_path('config/model_change_tracking.php'),
-            __DIR__.'/../models/LogModelChange.php' => base_path('app/models/LogModelChange.php'),
-            __DIR__.'/../models/LogModelStateChange.php' => base_path('app/models/LogModelStateChange.php'),
+            __DIR__.'/../models/LogModelChange.php'        => base_path('app/models/LogModelChange.php'),
+            __DIR__.'/../models/LogModelStateChange.php'   => base_path('app/models/LogModelStateChange.php'),
         ]);
 
         // Load migrations.

@@ -5,7 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 
 class CreateLogModelChangeTable extends Migration
 {
-
     protected $table_name = 'log_model_change';
 
     /**

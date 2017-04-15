@@ -62,5 +62,4 @@ trait LogStateChangeTrait
             });
         }
     }
-
 }
