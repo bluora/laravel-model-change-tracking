@@ -62,23 +62,29 @@ trait LogChangeTrait
     {
         if (is_array($old_text) && is_array($new_text)) {
             $difference = (new MapDiffer())->doDiff($old_text, $new_text);
+
             foreach ($difference as $key => $value) {
                 $value = $value->toArray();
+
                 if (!array_key_exists('oldText', $value)) {
                     $value['oldText'] = '';
                 }
+
                 if (!array_key_exists('newValue', $value)) {
                     $value['newValue'] = '';
                 }
+
                 if (is_array($value['oldText']) && is_array($value['newValue'])) {
                     static::getModelChangeDiff($column_name.'.'.$key, $log_change, $value['oldText'], $value['newValue']);
-                } else {
-                    $log_change[] = [
-                        'column_name' => $column_name.'.'.$key,
-                        'old_text'    => $value['oldText'],
-                        'new_text'    => $value['newValue'],
-                    ];
+
+                    return;
                 }
+
+                $log_change[] = [
+                    'column_name' => $column_name.'.'.$key,
+                    'old_text'    => $value['oldText'],
+                    'new_text'    => $value['newValue'],
+                ];
             }
 
             return;
@@ -240,7 +246,7 @@ trait LogChangeTrait
      *
      * @return void
      *
-     * @SuppressWarnings(PHPMD.NpathComplexity)
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public static function bootLogChangeTrait()
     {

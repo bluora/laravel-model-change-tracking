@@ -32,7 +32,7 @@ trait ChangeByUserTrait
      *
      * @return void
      *
-     * @SuppressWarnings(PHPMD.NpathComplexity)
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public static function bootChangeByUserTrait()
     {
