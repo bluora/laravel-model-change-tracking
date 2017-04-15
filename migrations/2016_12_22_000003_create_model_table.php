@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateModelTable extends Migration
 {
-
     protected $table_name = 'model';
 
     /**
