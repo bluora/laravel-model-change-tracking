@@ -49,57 +49,6 @@ trait LogChangeTrait
     }
 
     /**
-     * Boot the log changes trait for a model.
-     *
-     * @return void
-     */
-    public static function bootLogChangeTrait()
-    {
-        // Saving model event
-        static::saving(function ($model) {
-            $model->preDirtyCheck();
-        });
-
-        // Saved model event
-        static::saved(function ($model) {
-
-            // Track all changes to every column
-            $casts = $model->getCasts();
-            foreach ($model->getDirty(true) as $column_name => $value) {
-
-                // Ignore columns found in the do_not_log variable, and ignore non-json columns
-                if ((empty($model->do_not_log) || !in_array($column_name, $model->do_not_log))
-                    && !in_array($column_name, static::$do_not_log_fields)
-                    && (empty($casts[$column_name]) || $casts[$column_name] != 'json')) {
-                    $old_text = $model->getOriginal($column_name);
-                    $log_change = [];
-                    static::getModelChangeDiff($column_name, $log_change, $old_text, $value);
-                    foreach ($log_change as $change) {
-
-                        if (is_array($change['old_text'])) {
-                            $change['old_text'] = json_encode($change['old_text']);
-                        }
-
-                        if (is_array($change['new_text'])) {
-                            $change['new_text'] = json_encode($change['new_text']);
-                        }
-
-                        self::addModelChange(
-                            $model->id,
-                            $model->getTable(),
-                            $change['column_name'],
-                            (string) $change['old_text'],
-                            (string) $change['new_text'],
-                            [],
-                            []
-                        );
-                    }
-                }
-            }
-        });
-    }
-
-    /**
      * Calculate the difference.
      *
      * @param string $column_name
@@ -131,13 +80,15 @@ trait LogChangeTrait
                     ];
                 }
             }
-        } else {
-            $log_change[] = [
-                'column_name' => $column_name,
-                'old_text'    => $old_text,
-                'new_text'    => $new_text,
-            ];
+
+            return;
         }
+
+        $log_change[] = [
+            'column_name' => $column_name,
+            'old_text'    => $old_text,
+            'new_text'    => $new_text,
+        ];
     }
 
     /**
@@ -196,21 +147,18 @@ trait LogChangeTrait
      */
     public function processManyToManyChange($relation_method_name, $new_value)
     {
-
         // The join between the model and the other model
         $relation = $this->$relation_method_name();
 
         // This model
         $model_id = $this->id;
         $model_key_name = $relation->getQualifiedForeignKeyName();
-        $model_id_column = $this->getKeyName();
         $model_qualified_id_column = $this->getQualifiedKeyName();
 
         // The other model
         $related_model = $relation->getRelated();
         $related_model_key_name = $relation->getQualifiedRelatedKeyName();
         $related_model_id_column = $related_model->getKeyName();
-        $related_model_qualified_id_column = $related_model->getQualifiedKeyName();
         $related_model_class = get_class($related_model);
 
         // Check singular and plural
@@ -285,5 +233,58 @@ trait LogChangeTrait
                 [$this->id]
             );
         }
+    }
+
+    /**
+     * Boot the log changes trait for a model.
+     *
+     * @return void
+     *
+     * @SuppressWarnings(PHPMD.NpathComplexity)
+     */
+    public static function bootLogChangeTrait()
+    {
+        // Saving model event
+        static::saving(function ($model) {
+            $model->preDirtyCheck();
+        });
+
+        // Saved model event
+        static::saved(function ($model) {
+
+            // Track all changes to every column
+            $casts = $model->getCasts();
+            foreach ($model->getDirty(true) as $column_name => $value) {
+
+                // Ignore columns found in the do_not_log variable, and ignore non-json columns
+                if ((empty($model->do_not_log) || !in_array($column_name, $model->do_not_log))
+                    && !in_array($column_name, static::$do_not_log_fields)
+                    && (empty($casts[$column_name]) || $casts[$column_name] != 'json')) {
+                    $old_text = $model->getOriginal($column_name);
+                    $log_change = [];
+                    static::getModelChangeDiff($column_name, $log_change, $old_text, $value);
+                    foreach ($log_change as $change) {
+
+                        if (is_array($change['old_text'])) {
+                            $change['old_text'] = json_encode($change['old_text']);
+                        }
+
+                        if (is_array($change['new_text'])) {
+                            $change['new_text'] = json_encode($change['new_text']);
+                        }
+
+                        self::addModelChange(
+                            $model->id,
+                            $model->getTable(),
+                            $change['column_name'],
+                            (string) $change['old_text'],
+                            (string) $change['new_text'],
+                            [],
+                            []
+                        );
+                    }
+                }
+            }
+        });
     }
 }

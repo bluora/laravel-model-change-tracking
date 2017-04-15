@@ -31,15 +31,19 @@ trait ChangeByUserTrait
      * Boot the events that apply which user is making the last event change.
      *
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.NpathComplexity)
      */
     public static function bootChangeByUserTrait()
     {
         static::creating(function ($model) {
-            if (!App::runningInConsole() && Auth::check() && $model->getCreatedByColumn()) {
-                $model->{$model->getUpdatedByColumn()} = Auth::user()->id;
-            }
-            if (!App::runningInConsole() && Auth::check() && $model->getUpdatedByColumn()) {
-                $model->{$model->getUpdatedByColumn()} = Auth::user()->id;
+            if (!App::runningInConsole() && Auth::check()) {
+                if ($model->getCreatedByColumn()) {
+                    $model->{$model->getUpdatedByColumn()} = Auth::user()->id;
+                }
+                if ($model->getUpdatedByColumn()) {
+                    $model->{$model->getUpdatedByColumn()} = Auth::user()->id;
+                }
             }
 
             return true;
