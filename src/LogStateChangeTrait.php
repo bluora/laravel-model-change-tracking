@@ -62,4 +62,54 @@ trait LogStateChangeTrait
             });
         }
     }
+
+    /**
+     * Return the user that created this model.
+     *
+     * @return User
+     */
+    public function getCreatedByAttribute()
+    {
+        return $this->stateChange()
+            ->where('state', 'created')
+            ->first();
+    }
+
+    /**
+     * Return the user that updated this model.
+     *
+     * @return User
+     */
+    public function getUpdatedByAttribute()
+    {
+        return $this->stateChange()
+            ->where('state', 'updated')
+            ->orderBy('log_at', 'DESC')
+            ->first();
+    }
+
+    /**
+     * Return the user that restored this model.
+     *
+     * @return User
+     */
+    public function getRestoredByAttribute()
+    {
+        return $this->stateChange()
+            ->where('state', 'restored')
+            ->orderBy('log_at', 'DESC')
+            ->first();
+    }
+
+    /**
+     * Get the logs for this model.
+     *
+     * @return Collection
+     */
+    public function stateChange()
+    {
+        return $this->hasMany(config('model_change_tracking.LogModelStateChange'), 'model_id', 'id')
+            ->where('model', studly_case($this->table))
+            ->orderBy('log_at');
+    }
 }
