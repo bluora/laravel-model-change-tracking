@@ -54,6 +54,6 @@ class LogModelChange extends Model
      */
     public function logBy()
     {
-        return $this->hasOne('App\Models\User');
+        return $this->hasOne(User::class, 'id', 'log_by');
     }
 }
