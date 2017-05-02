@@ -89,6 +89,19 @@ trait LogStateChangeTrait
     }
 
     /**
+     * Return the user that deleted this model.
+     *
+     * @return User
+     */
+    public function getDeletedByAttribute()
+    {
+        return $this->stateChange()
+            ->where('state', 'deleted')
+            ->orderBy('log_at', 'DESC')
+            ->first();
+    }
+
+    /**
      * Return the user that restored this model.
      *
      * @return User
