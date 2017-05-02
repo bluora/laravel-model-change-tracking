@@ -70,9 +70,13 @@ trait LogStateChangeTrait
      */
     public function getCreatedByAttribute()
     {
-        return $this->stateChange()
+        $log = $this->stateChange()
             ->where('state', 'created')
             ->first();
+
+        if (!is_null($log)) {
+            return $log->logBy;
+        }
     }
 
     /**
@@ -82,10 +86,14 @@ trait LogStateChangeTrait
      */
     public function getUpdatedByAttribute()
     {
-        return $this->stateChange()
+        $log = $this->stateChange()
             ->where('state', 'updated')
             ->orderBy('log_at', 'DESC')
             ->first();
+
+        if (!is_null($log)) {
+            return $log->logBy;
+        }
     }
 
     /**
@@ -95,10 +103,14 @@ trait LogStateChangeTrait
      */
     public function getDeletedByAttribute()
     {
-        return $this->stateChange()
+        $log = $this->stateChange()
             ->where('state', 'deleted')
             ->orderBy('log_at', 'DESC')
             ->first();
+
+        if (!is_null($log)) {
+            return $log->logBy;
+        }
     }
 
     /**
@@ -108,10 +120,14 @@ trait LogStateChangeTrait
      */
     public function getRestoredByAttribute()
     {
-        return $this->stateChange()
+        $log = $this->stateChange()
             ->where('state', 'restored')
             ->orderBy('log_at', 'DESC')
             ->first();
+
+        if (!is_null($log)) {
+            return $log->logBy;
+        }
     }
 
     /**
