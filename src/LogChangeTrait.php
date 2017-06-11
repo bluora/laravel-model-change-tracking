@@ -2,6 +2,7 @@
 
 namespace Bluora\LaravelModelChangeTracking;
 
+use App\Models\LogModelChange;
 use Auth;
 use Config;
 use Diff\Differ\MapDiffer;
@@ -21,6 +22,17 @@ trait LogChangeTrait
      * @param array
      */
     protected static $do_not_log_fields = ['created_at', 'updated_at', 'archived_at', 'deleted_at'];
+
+    /**
+     * Get change log for this model.
+     *
+     * @return
+     */
+    public function changeLog()
+    {
+        return $this->hasMany(LogModelChange::class, 'model_id', 'id')
+            ->where('table_name', $this->getTable());
+    }
 
     /**
      * Run a dirty check before returning what is dirty.
