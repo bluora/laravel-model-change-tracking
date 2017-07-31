@@ -164,7 +164,7 @@ trait LogChangeTrait
      *
      * @return void
      */
-    public function processManyToManyChange($relation_method_name, $new_value)
+    public function processManyToManyChange($relation_method_name, $new_value, $override_relationship_method = null)
     {
         // The join between the model and the other model
         $relation = $this->$relation_method_name();
@@ -181,9 +181,13 @@ trait LogChangeTrait
         $related_model_class = get_class($related_model);
 
         // Check singular and plural
-        $relationship_method = camel_case($this->getTable());
-        if (!method_exists($related_model_class, $relationship_method)) {
-            $relationship_method = str_plural($relationship_method);
+        if (!is_null($override_relationship_method)) {
+            $relationship_method = $override_relationship_method;
+        } elseif (is_null($override_relationship_method)) {
+            $relationship_method = camel_case($this->getTable());
+            if (!method_exists($related_model_class, $relationship_method)) {
+                $relationship_method = str_plural($relationship_method);
+            }
         }
 
         // Old items before we make change
