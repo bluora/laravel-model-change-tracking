@@ -1,12 +1,12 @@
 {
-    "name": "bluora/laravel-model-change-tracking",
+    "name": "hnhdigital-os/laravel-model-change-tracking",
     "description": "Provides support for tracking current user against model changes for the Eloquent ORM",
     "keywords": ["laravel","illuminate","eloquent"],
     "license": "MIT",
     "authors": [
         {
             "name": "Rocco Howard",
-            "email": "rocco@bluora.com.au"
+            "email": "rocco@hnh.digital"
         }
     ],
     "require": {
