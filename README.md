@@ -2,9 +2,9 @@
 
 This package provides a number of traits to track changes made to a model.
 
-[![Latest Stable Version](https://poser.pugx.org/bluora/laravel-model-change-tracking/v/stable.svg)](https://packagist.org/packages/bluora/laravel-model-change-tracking) [![Total Downloads](https://poser.pugx.org/bluora/laravel-model-change-tracking/downloads.svg)](https://packagist.org/packages/bluora/laravel-model-change-tracking) [![Latest Unstable Version](https://poser.pugx.org/bluora/laravel-model-change-tracking/v/unstable.svg)](https://packagist.org/packages/bluora/laravel-model-change-tracking) [![License](https://poser.pugx.org/bluora/laravel-model-change-tracking/license.svg)](https://packagist.org/packages/bluora/laravel-model-change-tracking)
+[![Latest Stable Version](https://poser.pugx.org/hnhdigital-os/laravel-model-change-tracking/v/stable.svg)](https://packagist.org/packages/hnhdigital-os/laravel-model-change-tracking) [![Total Downloads](https://poser.pugx.org/hnhdigital-os/laravel-model-change-tracking/downloads.svg)](https://packagist.org/packages/hnhdigital-os/laravel-model-change-tracking) [![Latest Unstable Version](https://poser.pugx.org/hnhdigital-os/laravel-model-change-tracking/v/unstable.svg)](https://packagist.org/packages/hnhdigital-os/laravel-model-change-tracking) [![License](https://poser.pugx.org/hnhdigital-os/laravel-model-change-tracking/license.svg)](https://packagist.org/packages/hnhdigital-os/laravel-model-change-tracking)
 
-[![Build Status](https://travis-ci.org/bluora/laravel-model-change-tracking.svg?branch=master)](https://travis-ci.org/bluora/laravel-model-change-tracking) [![StyleCI](https://styleci.io/repos/53252133/shield?branch=master)](https://styleci.io/repos/53252133) [![Test Coverage](https://codeclimate.com/github/bluora/laravel-model-change-tracking/badges/coverage.svg)](https://codeclimate.com/github/bluora/laravel-model-change-tracking/coverage) [![Issue Count](https://codeclimate.com/github/bluora/laravel-model-change-tracking/badges/issue_count.svg)](https://codeclimate.com/github/bluora/laravel-model-change-tracking) [![Code Climate](https://codeclimate.com/github/bluora/laravel-model-change-tracking/badges/gpa.svg)](https://codeclimate.com/github/bluora/laravel-model-change-tracking) 
+[![Build Status](https://travis-ci.org/hnhdigital-os/laravel-model-change-tracking.svg?branch=master)](https://travis-ci.org/hnhdigital-os/laravel-model-change-tracking) [![StyleCI](https://styleci.io/repos/53252133/shield?branch=master)](https://styleci.io/repos/53252133) [![Test Coverage](https://codeclimate.com/github/hnhdigital-os/laravel-model-change-tracking/badges/coverage.svg)](https://codeclimate.com/github/hnhdigital-os/laravel-model-change-tracking/coverage) [![Issue Count](https://codeclimate.com/github/hnhdigital-os/laravel-model-change-tracking/badges/issue_count.svg)](https://codeclimate.com/github/hnhdigital-os/laravel-model-change-tracking) [![Code Climate](https://codeclimate.com/github/hnhdigital-os/laravel-model-change-tracking/badges/gpa.svg)](https://codeclimate.com/github/hnhdigital-os/laravel-model-change-tracking) 
 
 ## State Change
 Track state changes on your model and by which user for the following states - `created`, `updated`, `deleted`, and `restored`.
@@ -19,7 +19,7 @@ Adds events to set a attribute to the current user for when a model is `created`
 
 Via composer:
 
-`$ composer require-dev bluora/laravel-model-change-tracking dev-master`
+`$ composer require-dev hnhdigital-os/laravel-model-change-tracking dev-master`
 
 Enable the service provider by editing config/app.php:
 
