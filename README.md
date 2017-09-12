@@ -19,7 +19,7 @@ Adds events to set a attribute to the current user for when a model is `created`
 
 Via composer:
 
-`$ composer require-dev hnhdigital-os/laravel-model-change-tracking dev-master`
+`$ composer require hnhdigital-os/laravel-model-change-tracking dev-master`
 
 Enable the service provider by editing config/app.php:
 
