@@ -20,14 +20,15 @@ trait LogStateChangeTrait
     {
         $models_path = Config::get('model_change_tracking.ModelsPath');
         $log_model_name = Config::get('model_change_tracking.LogModelStateChange');
+        $model_id_name = config('model_change_tracking.log-model-state-change.model-id');
 
         $log = new $log_model_name();
         $log->model = str_replace($models_path, '', static::class);
-        $log->model_id = $model->id;
+        $log->$model_id_name = $model->getKey();
         $log->state = $state;
         $log->log_by = null;
         if (!App::runningInConsole() && Auth::check()) {
-            $log->log_by = Auth::user()->id;
+            $log->log_by = Auth::user()->getKey();
         }
         $log->ip_address = request()->ip();
         $log->save();
@@ -137,7 +138,10 @@ trait LogStateChangeTrait
      */
     public function stateChange()
     {
-        return $this->hasMany(config('model_change_tracking.LogModelStateChange'), 'model_id', 'id')
+        $model_id_name = config('model_change_tracking.log-model-state-change.model-id');
+        $model_other_id_name = config('model_change_tracking.log-model-state-change.model-other-id');
+
+        return $this->hasMany(config('model_change_tracking.LogModelStateChange'), $model_id_name, $model_other_id_name)
             ->where('model', studly_case($this->table))
             ->orderBy('log_at');
     }

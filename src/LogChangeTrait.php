@@ -24,17 +24,6 @@ trait LogChangeTrait
     protected static $do_not_log_fields = ['created_at', 'updated_at', 'archived_at', 'deleted_at'];
 
     /**
-     * Get change log for this model.
-     *
-     * @return
-     */
-    public function changeLog()
-    {
-        return $this->hasMany(LogModelChange::class, 'model_id', 'id')
-            ->where('table_name', $this->getTable());
-    }
-
-    /**
      * Run a dirty check before returning what is dirty.
      *
      * @return array
@@ -134,6 +123,7 @@ trait LogChangeTrait
     ) {
         $models_path = Config::get('model_change_tracking.ModelsPath');
         $log_model_name = Config::get('model_change_tracking.LogModelChange');
+        $model_id_name = config('model_change_tracking.log-model-change.model-id');
 
         $add_value = (is_null($add_value)) ? '' : $add_value;
         $remove_value = (is_null($remove_value)) ? '' : $remove_value;
@@ -141,7 +131,7 @@ trait LogChangeTrait
         if ($old_text !== $new_text) {
             $log = new $log_model_name();
             $log->model = str_replace($models_path, '', static::class);
-            $log->model_id = $model_id;
+            $log->$model_id_name = $model_id;
             $log->table_name = $table_name;
             $log->column_name = $column_name;
             $log->old_text = $old_text;
@@ -149,7 +139,7 @@ trait LogChangeTrait
             $log->add_value = json_encode($add_value);
             $log->remove_value = json_encode($remove_value);
             if (Auth::check()) {
-                $log->log_by = Auth::user()->id;
+                $log->log_by = Auth::user()->getKey();
             }
             $log->ip_address = request()->ip();
             $log->save();
@@ -170,7 +160,7 @@ trait LogChangeTrait
         $relation = $this->$relation_method_name();
 
         // This model
-        $model_id = $this->id;
+        $model_id = $this->getKey();
         $model_key_name = $relation->getQualifiedForeignKeyName();
         $model_qualified_id_column = $this->getQualifiedKeyName();
 
@@ -222,7 +212,7 @@ trait LogChangeTrait
 
         // Log against the model
         self::addModelChange(
-            $this->id,
+            $this->getKey(),
             $relation->getTable(),
             $related_model_key_name,
             $old_text,
@@ -256,6 +246,20 @@ trait LogChangeTrait
                 [$this->id]
             );
         }
+    }
+
+    /**
+     * Get change log for this model.
+     *
+     * @return
+     */
+    public function changeLog()
+    {
+        $model_id_name = config('model_change_tracking.log-model-change.model-id');
+        $model_other_id_name = config('model_change_tracking.log-model-change.model-other-id');
+
+        return $this->hasMany(LogModelChange::class, $model_id_name, $model_other_id_name)
+            ->where('table_name', $this->getTable());
     }
 
     /**
