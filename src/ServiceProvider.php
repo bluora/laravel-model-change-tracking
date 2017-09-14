@@ -28,6 +28,6 @@ class ServiceProvider extends BaseServiceProvider
         ]);
 
         // Load migrations.
-        $this->loadMigrationsFrom(__DIR__.'/../migrations');
+        //$this->loadMigrationsFrom(__DIR__.'/../migrations');
     }
 }
