@@ -20,7 +20,7 @@ trait LogStateChangeTrait
     {
         $models_path = Config::get('model_change_tracking.ModelsPath');
         $log_model_name = Config::get('model_change_tracking.LogModelStateChange');
-        $model_id_name = config('model_change_tracking.log-model-state-change.model-id');
+        $model_id_name = config('model_change_tracking.log-model-state-change.model-id', 'model_id');
 
         $log = new $log_model_name();
         $log->model = str_replace($models_path, '', static::class);
@@ -138,8 +138,8 @@ trait LogStateChangeTrait
      */
     public function stateChange()
     {
-        $model_id_name = config('model_change_tracking.log-model-state-change.model-id');
-        $model_other_id_name = config('model_change_tracking.log-model-state-change.model-other-id');
+        $model_id_name = config('model_change_tracking.log-model-state-change.model-id', 'model_id');
+        $model_other_id_name = config('model_change_tracking.log-model-state-change.model-other-id', 'id');
 
         return $this->hasMany(config('model_change_tracking.LogModelStateChange'), $model_id_name, $model_other_id_name)
             ->where('model', studly_case($this->table))

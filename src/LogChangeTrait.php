@@ -255,8 +255,8 @@ trait LogChangeTrait
      */
     public function changeLog()
     {
-        $model_id_name = config('model_change_tracking.log-model-change.model-id', 'id');
-        $model_other_id_name = config('model_change_tracking.log-model-change.model-other-id', 'model_id');
+        $model_id_name = config('model_change_tracking.log-model-change.model-id', 'model_id');
+        $model_other_id_name = config('model_change_tracking.log-model-change.model-other-id', 'id');
 
         return $this->hasMany(LogModelChange::class, $model_id_name, $model_other_id_name)
             ->where('table_name', $this->getTable());
