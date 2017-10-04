@@ -123,7 +123,7 @@ trait LogChangeTrait
     ) {
         $models_path = Config::get('model_change_tracking.ModelsPath');
         $log_model_name = Config::get('model_change_tracking.LogModelChange');
-        $model_id_name = config('model_change_tracking.log-model-change.model-id');
+        $model_id_name = config('model_change_tracking.log-model-change.model-id', 'model_id');
 
         $add_value = (is_null($add_value)) ? '' : $add_value;
         $remove_value = (is_null($remove_value)) ? '' : $remove_value;
@@ -255,8 +255,8 @@ trait LogChangeTrait
      */
     public function changeLog()
     {
-        $model_id_name = config('model_change_tracking.log-model-change.model-id');
-        $model_other_id_name = config('model_change_tracking.log-model-change.model-other-id');
+        $model_id_name = config('model_change_tracking.log-model-change.model-id', 'id');
+        $model_other_id_name = config('model_change_tracking.log-model-change.model-other-id', 'model_id');
 
         return $this->hasMany(LogModelChange::class, $model_id_name, $model_other_id_name)
             ->where('table_name', $this->getTable());
