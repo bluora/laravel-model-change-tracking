@@ -39,10 +39,10 @@ trait ChangeByUserTrait
         static::creating(function ($model) {
             if (!App::runningInConsole() && Auth::check()) {
                 if ($model->getCreatedByColumn()) {
-                    $model->{$model->getUpdatedByColumn()} = Auth::user()->id;
+                    $model->{$model->getUpdatedByColumn()} = Auth::user()->getKey();
                 }
                 if ($model->getUpdatedByColumn()) {
-                    $model->{$model->getUpdatedByColumn()} = Auth::user()->id;
+                    $model->{$model->getUpdatedByColumn()} = Auth::user()->getKey();
                 }
             }
 
@@ -51,7 +51,7 @@ trait ChangeByUserTrait
 
         static::updating(function ($model) {
             if (!App::runningInConsole() && Auth::check() && $model->getUpdatedByColumn()) {
-                $model->{$model->getUpdatedByColumn()} = Auth::user()->id;
+                $model->{$model->getUpdatedByColumn()} = Auth::user()->getKey();
             }
 
             return true;
@@ -59,7 +59,7 @@ trait ChangeByUserTrait
 
         static::deleting(function ($model) {
             if (!App::runningInConsole() && Auth::check() && $model->getDeletedByColumn()) {
-                $model->{$model->getDeletedByColumn()} = Auth::user()->id;
+                $model->{$model->getDeletedByColumn()} = Auth::user()->getKey();
             }
 
             return true;

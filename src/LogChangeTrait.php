@@ -229,7 +229,7 @@ trait LogChangeTrait
                 $model_key_name,
                 '',
                 $this->log_name,
-                [$this->id],
+                [$this->getKey()],
                 []
             );
         }
@@ -243,7 +243,7 @@ trait LogChangeTrait
                 $this->log_name,
                 '',
                 [],
-                [$this->id]
+                [$this->getKey()]
             );
         }
     }
@@ -300,7 +300,7 @@ trait LogChangeTrait
                         }
 
                         self::addModelChange(
-                            $model->id,
+                            $model->getKey(),
                             $model->getTable(),
                             $change['column_name'],
                             (string) $change['old_text'],
