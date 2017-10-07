@@ -27,7 +27,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "HnhDigital\\LaravelModelChangeTracking\\ServiceProvider"
+                "Bluora\\LaravelModelChangeTracking\\ServiceProvider"
             ]
         }
     }
