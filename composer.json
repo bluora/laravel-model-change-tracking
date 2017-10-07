@@ -23,5 +23,12 @@
         "psr-4": {
             "Bluora\\LaravelModelChangeTracking\\": "src/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "HnhDigital\\LaravelModelChangeTracking\\ServiceProvider"
+            ]
+        }
     }
 }
