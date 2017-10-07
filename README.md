@@ -6,22 +6,15 @@ This package provides a number of traits to track changes made to a model.
 
 [![Build Status](https://travis-ci.org/hnhdigital-os/laravel-model-change-tracking.svg?branch=master)](https://travis-ci.org/hnhdigital-os/laravel-model-change-tracking) [![StyleCI](https://styleci.io/repos/53252133/shield?branch=master)](https://styleci.io/repos/53252133) [![Test Coverage](https://codeclimate.com/github/hnhdigital-os/laravel-model-change-tracking/badges/coverage.svg)](https://codeclimate.com/github/hnhdigital-os/laravel-model-change-tracking/coverage) [![Issue Count](https://codeclimate.com/github/hnhdigital-os/laravel-model-change-tracking/badges/issue_count.svg)](https://codeclimate.com/github/hnhdigital-os/laravel-model-change-tracking) [![Code Climate](https://codeclimate.com/github/hnhdigital-os/laravel-model-change-tracking/badges/gpa.svg)](https://codeclimate.com/github/hnhdigital-os/laravel-model-change-tracking) 
 
-## State Change
-Track state changes on your model and by which user for the following states - `created`, `updated`, `deleted`, and `restored`.
-
-## Attribute Change Trait
-Adds a `saving` event to the model to track changes to all attribute values.
-
-## Change by User Trait
-Adds events to set a attribute to the current user for when a model is `created`, `updated`, `archived`, or `deleted`.
-
 ## Install
 
 Via composer:
 
-`$ composer require hnhdigital-os/laravel-model-change-tracking dev-master`
+`$ composer require hnhdigital-os/laravel-model-change-tracking ~1.0`
 
-Enable the service provider by editing config/app.php:
+This package's service provider will autoload from Laravel 5.5.
+
+To enable the service provider in versions prior to Laravel 5.4, edit the config/app.php:
 
 ```php
     'providers' => [
@@ -30,6 +23,15 @@ Enable the service provider by editing config/app.php:
         ...
     ];
 ```
+
+## State Change
+Track state changes on your model and by which user for the following states - `created`, `updated`, `deleted`, and `restored`.
+
+## Attribute Change Trait
+Adds a `saving` event to the model to track changes to all attribute values.
+
+## Change by User Trait
+Adds events to set a attribute to the current user for when a model is `created`, `updated`, `archived`, or `deleted`.
 
 ## Usage
 
