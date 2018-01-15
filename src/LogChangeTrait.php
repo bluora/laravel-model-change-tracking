@@ -32,6 +32,7 @@ trait LogChangeTrait
     {
         // Ensure empty string values for dates are converted to null
         $casts = $this->getDates();
+
         foreach ($this->getDirty() as $column_name => $value) {
             if (in_array($column_name, $casts) && $value === '') {
                 $this->$column_name = null;
@@ -40,8 +41,9 @@ trait LogChangeTrait
 
         // Trim all values
         if (!static::$disable_trim_values) {
+            $casts = $this->getCasts();
             foreach ($this->getDirty() as $column_name => $value) {
-                if (!is_null($value)) {
+                if (!is_null($value) && array_get($casts, $column_name) !== 'boolean') {
                     $this->$column_name = trim($value);
                 }
             }
