@@ -10,47 +10,11 @@ use Diff\Differ\MapDiffer;
 trait LogChangeTrait
 {
     /**
-     * Disable trimming of column values.
-     *
-     * @param var
-     */
-    protected static $disable_trim_values = false;
-
-    /**
      * No logging of the standard date columns.
      *
      * @param array
      */
     protected static $do_not_log_fields = ['created_at', 'updated_at', 'archived_at', 'deleted_at'];
-
-    /**
-     * Run a dirty check before returning what is dirty.
-     *
-     * @return array
-     */
-    public function preDirtyCheck()
-    {
-        // Ensure empty string values for dates are converted to null
-        $casts = $this->getDates();
-
-        foreach ($this->getDirty() as $column_name => $value) {
-            if (in_array($column_name, $casts) && $value === '') {
-                $this->$column_name = null;
-            }
-        }
-
-        // Trim all values
-        if (!static::$disable_trim_values) {
-            $casts = $this->getCasts();
-            foreach ($this->getDirty() as $column_name => $value) {
-                if (!is_null($value) && array_get($casts, $column_name) !== 'boolean') {
-                    $this->$column_name = trim($value);
-                }
-            }
-        }
-
-        return $this->getDirty();
-    }
 
     /**
      * Calculate the difference.
@@ -273,11 +237,6 @@ trait LogChangeTrait
      */
     public static function bootLogChangeTrait()
     {
-        // Saving model event
-        static::saving(function ($model) {
-            $model->preDirtyCheck();
-        });
-
         // Saved model event
         static::saved(function ($model) {
 
