@@ -127,12 +127,22 @@ trait LogChangeTrait
 
         // This model
         $model_id = $this->getKey();
-        $model_key_name = $relation->getQualifiedForeignKeyName();
+
+        if (!method_exists($relation, $relation_fk_method = 'getQualifiedForeignKeyName')) {
+            $relation_fk_method = 'getQualifiedForeignPivotKeyName';
+        }
+
+        $model_key_name = $relation->$relation_fk_method();
         $model_qualified_id_column = $this->getQualifiedKeyName();
 
         // The other model
         $related_model = $relation->getRelated();
-        $related_model_key_name = $relation->getQualifiedRelatedKeyName();
+
+        if (!method_exists($relation, $relation_rk_method = 'getQualifiedRelatedKeyName')) {
+            $relation_rk_method = 'getQualifiedRelatedPivotKeyName';
+        }
+
+        $related_model_key_name = $relation->$relation_rk_method();
         $related_model_id_column = $related_model->getKeyName();
         $related_model_class = get_class($related_model);
 
